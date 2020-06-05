@@ -1,0 +1,13 @@
+
+M
+1 3 5 2 4
+Sum = 15
+
+
+N
+2 2 3 5 2 4
+Sum = 18
+
+
+1. Get the sum (M + N time)
+2M + 2N time + C

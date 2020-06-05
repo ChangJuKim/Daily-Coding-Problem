@@ -1,0 +1,54 @@
+import java.util.LinkedList;
+import java.util.Iterator;
+
+public class IntersectingLinkedLists {
+
+    // First, sum each list.
+    // Next have pointers interating through each list
+    // As you go through it, remove (or iterate through) the lists based on the following conditions:
+    // 1. If the sums are different or the pointers are pointing to different numbers, remove
+    //    a. from the list with the higher sum
+    //    b. if the sums are the same, the higher number
+    // 2. If the sums are the same AND the pointers are pointing to the same numbers,
+    //    a. Record the current node as a potential candidate
+    //    b. remove from both lists
+    //    c. if it is the same number, go to step b
+    //    d. if they are different numbers, forget the node and go to step 1
+
+    
+    // Returns the sum of the values in the list
+    public static int getSum(LinkedList<Integer> list) {
+	Iterator<Integer> itr = list.listIterator();
+	int sum = 0;
+	while (itr.hasNext()) {
+	    sum += itr.next();
+	}
+	return sum;
+    }
+
+    // by the way, consider negative numbers
+    
+    public static void main(String[] args) {
+	LinkedList<Integer> A = new LinkedList<Integer>();
+	LinkedList<Integer> B = new LinkedList<Integer>();
+	int sumA = getSum(A);
+	int sumB = getSum(B);
+	Iterator<Integer> itrA = A.listIterator();
+	Iterator<Integer> itrB = B.listIterator();
+
+	int answer = -999;
+	while(itrA.hasNext() && itrB.hasNext()) {
+	    assert sumA > 0;
+	    assert sumB > 0;
+	    if (sumA > sumB) {
+		sumA -= itrA.next();
+	    } else if (sumB > sumA) {
+		sumB -= itrB.next();
+	    } else {
+		assert sumA == sumB;
+		// record current node
+		// 
+	    }
+	}
+    }
+}
