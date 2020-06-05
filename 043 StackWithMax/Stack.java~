@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+
+public class Stack<T> {
+    private ArrayList<T> ary;
+    int max;
+
+    public Stack
+    
+    public void push(T val) {
+	ary.add(T);
+    }
+
+    public T pop() {
+	if (ary.size == 0) {
+	    return null;
+	}
+	return ary.get(ary.size()-1);
+    }
+
+    public T max() {
+	
+    }
+}

@@ -1,0 +1,9 @@
+How to make it extensible?
+
+Lets use rand5() and rand7() as examples
+
+Idea 1:
+  1. Determine smallest x so that 5^x > 7 [x is 2 in this specific example]
+  2. Call rand5() x times
+  3. On the xth call, multiply rand5() by 5^(x-1).
+  4. If it's the last couple of results, repeat 2-3. Otherwise return sum mod 7.
