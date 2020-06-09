@@ -22,7 +22,7 @@ public class NumDecodings {
 	}
 	int number = Integer.parseInt(text);
 	System.out.println("number: " + number);
-	return number > 0 && number <= 9; 
+	return number > 0 && number <= 9;
     }
 
     public static int decode(String text) {
@@ -30,24 +30,27 @@ public class NumDecodings {
 	return decode(text, ary, 0);
     }
 
+    // Notes: can change ary to just holding the last two values
+
     // Fills in ary[index] based on the following
     // ary[index] += ary[index - 2] if twoDigit()
     // ary[index] += ary[index - 1] if oneDigit()
+    // decode is just a glorified for loop
     public static int decode(String text, int[] ary, int index) {
 	int total = 0;
 	if (index == 0) {
-	    // Base case 1
+	    // Sets up ary[0]
 	    if (oneDigit(text.substring(0, 1))) {
 		total += 1;
 	    }
 	} else if (index == 1) {
-	    // Base case 2
+	    // Sets up ary[1]
 	    total += twoDigit(text.substring(0, 2)) ? 1 : 0;
 	    if (oneDigit(text.substring(1, 2))) {
 		total += ary[0];
 	    }
 	} else {
-	    // index >= 2
+	    // ary[2 - end]
 	    if (oneDigit(text.substring(index, index+1))) {
 		total += ary[index - 1];
 	    }
