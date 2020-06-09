@@ -1,0 +1,89 @@
+public class LargeIntegerStrings {
+    // String reprsentation of integers.
+    // Supports addition, multiplication, division, subtraction
+    
+    private String num;
+    private boolean isPos;
+
+
+    public LargeIntegerStrings(String number) {
+	num = number;
+    }
+
+    public LargeIntegerStrings() {
+	num = "";
+    }
+
+    public int length() {
+	return num.length();
+    }
+
+    // Gets the ith last digit
+    private int getDigit(int i) {
+	return Integer.parseInt(num.substring(length()-i-1, length()-i));
+    }
+
+    private void negate() {
+	isPos = !isPos;
+    }
+
+    // CANNOT HANDLE NEGATIVES
+    // Returns this + other
+    // 123 + 45678 = 45801
+    public LargeIntegerStrings add(LargeIntegerStrings other) {
+	String result = "";
+	int carry = 0;
+	for (int i = 0; i < Math.min(length(), other.length()); i++) {
+	    // Runs through the numbers backwards (backward logic in getDigit)
+	    int digitSum = getDigit(i) + other.getDigit(i) + carry;
+	    if (digitSum >= 10) {
+		carry = 1;
+		digitSum -= 10;
+	    } else {
+		carry = 0;
+	    }
+	    result = digitSum + result;
+	}
+	int i = Math.max(length(), other.length()) - Math.min(length(), other.length());
+	String remaining = length() > other.length() ? num.substring(0, i) : other.num.substring(0, i);
+	if (carry == 1) {
+	    if (i == 0) {
+		// If the lengths are the same, just add a 1
+		result = "" + carry + result;
+	    } else {
+		remaining = remaining.substring(0, i-1)
+		    + (length() > other.length() ? getDigit(i-1) + carry : other.getDigit(i-1) + carry);
+	    }
+	}
+	result = remaining + result;
+	return new LargeIntegerStrings(result);
+    }
+
+    // Returns this - other
+    public LargeIntegerStrings subtract(LargeIntegerStrings other) {
+	// this might change other.isPos
+	other.negate();
+	LargeIntegerStrings num = add(other);
+	return other;
+    }
+
+    // Returns this * other
+    // 1234 * 90 = 111060
+    public LargeIntegerStrings multiply(LargeIntegerStrings other) {
+	// Lets do this one by one. 4 * 0, 4 * 90, etc
+	//
+	LargeIntegerStrings result = "0";
+	for (int i = 0; i < other.length(); i++) {
+	    for (int j = 0; j < length(); j++) {
+		int digits = i + j; // number of 0's
+		String product = "" + (other.getDigit(i) * getDigit(i));
+		padZero(product, digits);
+	    }
+	}
+	return null;
+    }
+
+    public String toString() {
+	return num;
+    }
+}

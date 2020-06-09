@@ -1,0 +1,60 @@
+public class LargeInteger {
+    // String reprsentation of integers.
+    // Supports addition, multiplication, division, subtraction
+    
+    private String num;
+    private boolean isPos;
+
+
+    public LargeInteger(String number) {
+	num = number;
+    }
+
+    public LargeInteger() {
+	num = "";
+    }
+
+    public int length() {
+	return num.length();
+    }
+
+    // Gets the ith last digit
+    private int getDigit(int i) {
+	return Integer.parseInt(num.substring(length()-i-1, length()-i));
+    }
+
+    // CANNOT HANDLE NEGATIVES
+    // 123 + 45678 = 45801
+    public LargeInteger add(LargeInteger num2) {
+	String result = "";
+	int carry = 0;
+	for (int i = 0; i < Math.min(length(), num2.length()); i++) {
+	    // Runs through the numbers backwards (backward logic in getDigit)
+	    int digitSum = getDigit(i) + num2.getDigit(i) + carry;
+	    if (digitSum >= 10) {
+		carry = 1;
+		digitSum -= 10;
+	    } else {
+		carry = 0;
+	    }
+	    result = digitSum + result;
+	}
+	int i = Math.max(length(), num2.length()) - Math.min(length(), num2.length());
+	String remaining = length() > num2.length() ? num.substring(0, i) : num2.num.substring(0, i);
+	if (carry == 1) {
+	    if (i == 0) {
+		// If the lengths are the same, just add a 1
+		result = "" + carry + result;
+	    } else {
+		remaining = remaining.substring(0, i-1)
+		    + (length() > num2.length() ? getDigit(i-1) + carry : num2.getDigit(i-1) + carry);
+	    }
+	}
+	result = remaining + result;
+	return new LargeInteger(result);
+    }
+
+    public String toString() {
+	return num;
+    }
+}
