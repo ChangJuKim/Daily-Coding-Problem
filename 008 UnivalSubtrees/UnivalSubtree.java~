@@ -1,6 +1,0 @@
-public class UnivalSubtree {
-    public static void main(String[] args) {
-	Tree<Integer> t = new Tree<Integer>(0);
-	
-    }
-}
