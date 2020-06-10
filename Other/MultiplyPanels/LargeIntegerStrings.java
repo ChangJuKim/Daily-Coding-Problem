@@ -3,11 +3,20 @@ public class LargeIntegerStrings {
     // Supports addition, multiplication, division, subtraction
     
     private String num;
-    private boolean isPos;
-
 
     public LargeIntegerStrings(String number) {
-	num = number;
+	if (number.charAt(0) == '-') {
+	    num = number.substring(1);
+	} else {
+	    num = number;
+	}
+    }
+
+    public LargeIntegerStrings(int number) {
+	if (number < 0) {
+	    number *= -1;
+	}
+	num = "" + number;
     }
 
     public LargeIntegerStrings() {
@@ -26,15 +35,6 @@ public class LargeIntegerStrings {
     private int getDigit(String number, int i) {
 	return Integer.parseInt(number.substring(number.length()-i-1, number.length()-i));
     }
-
-    private void negate() {
-	isPos = !isPos;
-    }
-
-
-    // 1234567
-    //     567
-    //    
 
     // CANNOT HANDLE NEGATIVES
     // Returns this + other
@@ -78,14 +78,6 @@ public class LargeIntegerStrings {
 	return new LargeIntegerStrings(result);
     }
 
-    // Returns this - other
-    public LargeIntegerStrings subtract(LargeIntegerStrings other) {
-	// this might change other.isPos
-	other.negate();
-	LargeIntegerStrings num = add(other);
-	return other;
-    }
-
     private String padZero(String num, int numZeros) {
 	for (int i = 0; i < numZeros; i++) {
 	    num += "0";
@@ -111,17 +103,19 @@ public class LargeIntegerStrings {
 	return result;
     }
 
+    public LargeIntegerStrings multiply(int other) {
+	return multiply(new LargeIntegerStrings(other));
+    }
+
     public String toString() {
 	return num;
     }
 
     public boolean equals(LargeIntegerStrings other) {
-	return num == other.num && isPos == other.isPos;
+	return num == other.num;
     }
 
     public boolean equals(int number) {
-	int thisNum = Integer.parseInt(num);
-	//if (!isPos) { thisNum *= -1; }
-	return thisNum == number;
+	return num.equals("" + number);
     }
 }

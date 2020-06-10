@@ -18,37 +18,60 @@ public class MultiplyPanels {
 	return product.equals(one * two);
     }
 
+    public static String multiplyPanels(int[] ary) {
+	LargeIntegerStrings total = new LargeIntegerStrings("1");
+	int largestNeg = Integer.MIN_VALUE;
+	boolean evenNegs = true;
+	for (int i = 0; i < ary.length; i++) {
+	    if (ary[i] > 1) {
+		total = total.multiply(new LargeIntegerStrings(ary[i]));
+	    } else if (ary[i] < 0) {
+		evenNegs = !evenNegs;
+		if (largestNeg != Integer.MIN_VALUE) {
+		    total = total.multiply(-1 * Math.min(largestNeg, ary[i]));
+		    largestNeg = Math.max(largestNeg, ary[i]);
+		} else {
+		    largestNeg = ary[i];
+		}
+	    }
+	}
+	if (evenNegs && (largestNeg != Integer.MIN_VALUE)) {
+	    total = total.multiply(-1 * largestNeg);
+	}
+	return total.toString();
+    }
+
+    public static void printAry(int[] ary) {
+	System.out.print("[");
+	for (int i = 0; i < ary.length; i++) {
+	    if (i == 0) {
+		System.out.print(ary[i]);
+	    } else {
+		System.out.print(", " + ary[i]);
+	    }
+	}
+	System.out.println("]");
+    }
+
     
     public static void main(String[] args) {
 	Random randSeed = new Random();
 	int seed = randSeed.nextInt();
 	Random rand = new Random(seed);
 	System.out.println("seed: " + seed + "\n");
-	int testCases = 100000;
-	for (int i = 0; i < testCases; i++) {
-	    int one = rand.nextInt(1000);
-	    int two = rand.nextInt(100000);
-	    if (!testAdd(one, two)) {
-		System.out.println("~~~~~~~~~~ERROR ADD~~~~~~~~~~~~~");
-	    }
-	    if (!testMultiply(one, two)) {
-		System.out.println("~~~~~~~~~~ERROR MULTIPLY~~~~~~~~~~~~~");
-	    }
-	}
 
-	LargeIntegerStrings large = new LargeIntegerStrings("" + Math.abs(rand.nextInt()));
-	LargeIntegerStrings large2 = new LargeIntegerStrings("" + Math.abs(rand.nextInt()));
-	System.out.println(large.add(large2));
-	System.out.println(large.multiply(large2));
-	LargeIntegerStrings large3 = large.multiply(large.multiply(large2.multiply(large2)));
-	System.out.println(large3);
-	LargeIntegerStrings large4 = large3.multiply(large3.multiply(large3));
-	System.out.println(large4);
-	System.out.println(large4.multiply(large4));
-	for (int i = 0; i < 5; i++) {
-	    large4 = large4.multiply(large4);
+	int testCases = 10;
+	int panels = 50;
+	for (int i = 0; i < testCases; i++) {
+
+	    int[] ary = new int[panels];
+	    for (int j = 0; j < panels; j++) {
+		ary[j] = rand.nextInt(2001) - 1000;
+	    }
+	    System.out.print("Array: ");
+	    printAry(ary);
+	    System.out.println("Result: " + multiplyPanels(ary) + "\n\n");
 	}
-	System.out.println(large4);
     }
     
     
