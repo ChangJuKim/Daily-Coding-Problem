@@ -22,9 +22,22 @@ public class LetterNode {
 	set = new HashSet<LetterNode>();
     }
 
+    // Returns LetterNode in set that equals next
+    public LetterNode find(LetterNode next) {
+	if (set.contains(next)) {
+	    Iterator<LetterNode> itr = set.iterator();
+	    while (itr.hasNext()) {
+		LetterNode temp = itr.next();
+		if (temp.equals(next)) {
+		    return temp;
+		}
+	    }
+	}
+	return null;
+    }
+    
     // Returns true if properly added word.
     // Returns false if word already exists or an error occurred
-    // Some strange logic going on here. Most likely bugged
     public boolean add(String word) {
 	// Reached end of word. Add an end-of-word node
 	if (word.length() == 0) {
@@ -43,8 +56,14 @@ public class LetterNode {
 	} else {
 	    next = new LetterNode(word);
 	}
-	set.add(next);
-	return next.add(word);
+	if (set.add(next)) {
+	    System.out.println("set.add was true!");
+	    return next.add(word);
+	} else {
+	    System.out.println("set.add was false!");
+	    next = find(next);
+	    return next.add(word);
+	}
     }
 
     @Override
@@ -55,7 +74,7 @@ public class LetterNode {
     @Override
     public int hashCode() {
 	if (letter == null) {
-	    return 0; // no idea what to put as this
+	    return 96; // no idea what to put as this so put 'a' - 1
 	}
 	return letter.hashCode();
     }
@@ -86,7 +105,19 @@ public class LetterNode {
 	return true;
     }
 
+    public String setString() {
+	Iterator<LetterNode> itr = set.iterator();
+	String result = "[";
+	while (itr.hasNext()) {
+	    result += itr.next().letter + ", ";
+	}
+	result += "]";
+	return result;
+    }
+
     public String autocomplete(String prefix, String current) {
+	System.out.println("SET SIZE: " + set.size());
+	System.out.println("SET : " + setString());
 	// Base case
 	if (letter == null) {
 	    if (current.length() >= prefix.length()) {
@@ -98,58 +129,26 @@ public class LetterNode {
 	current += letter;
 	String result = "";
 	Iterator<LetterNode> itr = set.iterator();
-	while (itr.hasNext()) {
-	    LetterNode node = itr.next();
-	    // CONTINUE FROM HERE
+	if (current.length() >= prefix.length()) {
+	    if (!hasPrefix(prefix, current)) {
+		return "";
+	    }
+	    // Prefix found, print all possible results
+	    while (itr.hasNext()) {
+		LetterNode node = itr.next();
+		result += autocomplete(prefix, current);
+	    }
+	} else {
+	    if (!hasPrefix(current, prefix)) {
+		return "";
+	    }
+	    // Still matches... gotta keep traversing till current == prefix
+	    while (itr.hasNext()) {
+		LetterNode node = itr.next();
+		result += autocomplete(prefix, current);
+	    }
 	}
+	return result;
     }
 
-    /*
-    // Prefix is the first few letters
-    // Current is the compilation of nodes we went through
-    public String autocomplete(String prefix, String current) {
-	System.out.println("autocomplete(" + prefix + ", " + current + "). Letter: " + letter);
-	// The prefix was previouly found; return found words
-	if (current.length() >= prefix.length()) {
-	    if (letter == null) { // Leaf node
-		return current;
-	    } else { // Not a leaf => Keep traversing
-		String result = "";
-		current += letter;
-		Iterator<LetterNode> itr = set.iterator();
-		while (itr.hasNext()) {
-		    String word = itr.next().autocomplete(prefix, current);
-		    if (word.length() > 0) {
-			System.out.println("word: " + word + ". Length: " + word.length());
-			result += word + ", ";
-		    }
-		}
-		return result;
-	    }
-	}
-	// Keep going down Trie to reach prefix
-	else {
-	    if (letter == null) { // Leaf node
-		return "";
-	    } else {
-		current += letter;
-		
-		if (!hasPrefix(current, prefix)) { // No longer matches prefix
-		    System.out.println("" + current + " doesn't match with " + prefix);
-		    return "";
-		} else { // Keep traversing
-		    String result = "";
-		    Iterator<LetterNode> itr = set.iterator();
-		    while (itr.hasNext()) {
-			String word = itr.next().autocomplete(prefix, current);
-			if (word.length() > 0) {
-			    result += word + ", ";
-			}
-		    }
-		    return result;
-		}
-	    }
-	}
-    }
-    */
 }

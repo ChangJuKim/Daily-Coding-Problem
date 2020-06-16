@@ -19,12 +19,19 @@ public class Trie {
 	if (word.length() == 0) {
 	    return root.set.add(new LetterNode());
 	}
+	
 	LetterNode next = new LetterNode(word.substring(0, 1));
-	root.set.add(next);
-	return next.add(word);
+	if (root.set.add(next)) {
+	    return next.add(word);
+	} else {
+	    next = root.find(next);
+	    return next.add(word);
+	}
     }
 
     public String autocomplete(String prefix) {
+	System.out.println("SIZE: " + root.set.size());
+	System.out.println("SET : " + root.setString());
 	if (prefix.length() == 0) {
 	    String result = "";
 	    Iterator<LetterNode> itr = root.set.iterator();
