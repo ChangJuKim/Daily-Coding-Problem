@@ -37,4 +37,7 @@ Approach 2 (butterfly effect):
 Approach 3 (creds to Brandon for coming up with it):
   Idea: Update costs as you go through the houses
   1. House 1 costs are the same
-  2. House<i><color> cost = min(House<i-1> costs) that don't use same color 
+  2. House<i><color> cost = min(House<i-1> costs) that don't use same color
+
+
+Worked on it and then stopped because there was a lot of niche logic and I'm sure I made a mistake somewhere.
