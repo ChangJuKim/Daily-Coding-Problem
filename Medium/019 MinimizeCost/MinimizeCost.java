@@ -137,9 +137,9 @@ public class MinimizeCost {
     }
     
     // Doesn't work for this very specific case:
-    // h1: 1, 9999, 9999
-    // h2: 3, 3, 3
-    // h3: 9999, 9999, 1
+    // h1: 1, 9999, 9999, 9999
+    // h2: 1, 3, 2, 999, 999, 999
+    // h3: 9999, 9999, 1, 999, 999
     // Can be update to fix it, would have to increase minimums by one, and create significantly more if cases
 
     // This is actually complicated logic and I think I messed up somewhere. I'm stopping for now
