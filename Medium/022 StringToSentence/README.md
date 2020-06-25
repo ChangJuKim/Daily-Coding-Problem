@@ -8,7 +8,7 @@ For example, given the set of words 'quick', 'brown', 'the', 'fox', and the stri
 
 Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Going to assume the dictionary is in a HashSet. If it is not (for instance, if it's in an array), we can preprocess it into a hashset. It will take absurdly long but ideally you'd only preprocess it once and then afterwards you don't deal with the array dictionary.
 
@@ -19,3 +19,11 @@ Idea 1:
      2.b Update boolean[i] as true
   3. Continue until you reach end of string
      3.a. If you found a valid word, true. Else false.
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~
+Finished! Not sure about two parts
+1. Having global static variables. I made alreadyLookedThrough and dictionary global to ensure they're not constantly passed around between function calls. I suppose message can also be made global.
+2. Cloning currentords for each function call. At maximum the clone function is called message.size times (which isn't too bad because message should be relatively small in real world applications). Still that's about O(message.length ^ 2) space/run constraints.
