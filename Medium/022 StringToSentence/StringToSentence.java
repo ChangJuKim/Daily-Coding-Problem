@@ -42,11 +42,15 @@ public class StringToSentence {
 
     public static void main(String[] args) {
 	dictionary = new HashSet<String>();
-	dictionary.add("a");
-	dictionary.add("ab");
-	dictionary.add("cad");
-	dictionary.add("b");
-	String word = "abcade";
+	dictionary.add("th");
+	dictionary.add("equi");
+	dictionary.add("qui");
+	dictionary.add("the");
+	dictionary.add("quick");
+	dictionary.add("brown");
+	dictionary.add("fox");
+	
+	String word = "thequickbrownfox";
 	alreadyLookedThrough = new boolean[word.length()];
 	ArrayList<String> result = convertToSentence(word, 0, new ArrayList<String>());
 	if (result == null) {
