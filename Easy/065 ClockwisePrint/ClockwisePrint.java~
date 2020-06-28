@@ -1,3 +1,82 @@
 public class ClockwisePrint {
-    
+
+
+    // Make sure it works in a rectangle
+    public static void printClockwise(int[][] ary) {
+	if (ary.length == 0) {
+	    return;
+	}
+	// Setup starting variables
+	int counter = ary.length * ary[0].length;
+	Coordinate position = new Coordinate(0, 0);
+	Constraints walls = new Constraints(-1, ary.length, -1, ary[0].length);
+	String direction = "Right";
+	System.out.println(ary[position.x][position.y]);
+
+	while (counter > 1) {
+	    //System.out.println("Position: " + position + ". Direction: " + direction);
+	    if (direction.equals("Right")) {
+		if (position.y + 1 == walls.right) {
+		    direction = "Bot";
+		    walls.top = position.y;
+		} else {
+		    position.y += 1;
+		}
+	    }
+
+	    if (direction.equals("Bot")) {
+		if (position.x + 1 == walls.bot) {
+		    direction = "Left";
+		    //walls.right -= 1;
+		    walls.right = position.x;
+		} else {
+		    position.x += 1;
+		}
+	    }
+
+	    if (direction.equals("Left")) {
+		if (position.y - 1 == walls.left) {
+		    direction = "Top";
+		    //walls.bot -= 1;
+		    walls.bot = position.y;
+		} else {
+		    position.y -= 1;
+		}
+	    }
+
+	    if (direction.equals("Top")) {
+		if (position.x - 1 == walls.top) {
+		    direction = "Right";
+		    //walls.left += 1;
+		    walls.left = position.x;
+		    continue; // Ensures we keep changing direction till we find a correct spot
+		} else {
+		    position.x -= 1;
+		}
+	    }
+	    System.out.println(ary[position.x][position.y]);
+	    counter -= 1;
+	}	    
+    }
+
+    public static void printArray(int[][] ary) {
+	System.out.print("[");
+	for (int i = 0; i < ary.length; i++) {
+	    System.out.print("[");
+	    for (int j = 0; j < ary[i].length; j++) {
+		if (j == ary[i].length-1) {
+		    System.out.println("" + ary[i][j] + "]");
+		} else {
+		    System.out.print("" + ary[i][j] + ", ");
+		}
+	    }
+	}
+	System.out.println("]");
+    }
+
+    public static void main(String[] args) {
+	int[][] ary = new int[][] {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}};
+	printArray(ary);
+	printClockwise(ary);
+    }
 }
