@@ -3,7 +3,7 @@ public class LockingBinaryNode {
     public LockingBinaryNode left;
     public LockingBinaryNode right;
     private boolean locked;
-    public String name;
+    public String name; // just for testing purposes
 
 
     public LockingBinaryNode(String _name) {
@@ -73,10 +73,7 @@ public class LockingBinaryNode {
 	    rightUnlocked = right.descendentsUnlocked();
 	}
 	return leftUnlocked && rightUnlocked;
-    }
-    
-
-    
+    }   
 
 
     
