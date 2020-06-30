@@ -12,3 +12,8 @@ Do this in constant space and in one pass.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finished! No real problems here.
+
+Edit: Realized that it said *remove* and not *return*.
+Changes to code: keep track of k+1 nodes behind instead of k nodes behind
+Things to keep track of:
+  1. Edge cases (removing the first element)
