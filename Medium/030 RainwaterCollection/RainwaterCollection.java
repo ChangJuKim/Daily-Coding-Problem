@@ -1,12 +1,5 @@
 public class RainwaterCollection {
 
-    /*
-      Edge cases:
-        1. Elevation never descends
-	2. Elevation never ascends
-	3. Elevation is just a mountain (like this: ^ )
-
-     */
     public static int waterTrapped(int[] elevation) {
 	if (elevation.length <= 2) {
 	    return 0;
@@ -15,8 +8,9 @@ public class RainwaterCollection {
 	int rightIndex = elevation.length - 1;
 	int leftWall = elevation[leftIndex];
 	int rightWall = elevation[rightIndex];
-	int trappedWater = 0;
-	// Find two walls
+	int trappedWater = 0; // Total water / Answer
+	
+	// Find two tall walls
 	while (leftIndex <= rightIndex && leftWall <= elevation[leftIndex]) {
 	    leftWall = elevation[leftIndex];
 	    leftIndex += 1;
@@ -25,19 +19,19 @@ public class RainwaterCollection {
 	    rightWall = elevation[rightIndex];
 	    rightIndex -= 1;
 	}
-	
+
+	// Start determining water trapped
 	while (leftIndex <= rightIndex) {
+	    // Start at the smaller wall
 	    if (leftWall <= rightWall) {
 		if (elevation[leftIndex] < leftWall) {
-		    System.out.println("Left: " + trappedWater + " + " + (leftWall - elevation[leftIndex]) + " = " + (trappedWater + leftWall - elevation[leftIndex]));
 		    trappedWater += leftWall - elevation[leftIndex];
 		} else {
 		    leftWall = elevation[leftIndex];
 		}
 		leftIndex += 1;
-	    } else {
+	    } else { // Same logic as before but with right index instead
 		if (elevation[rightIndex] < rightWall) {
-		    System.out.println("Right: " + trappedWater + " + " + (rightWall - elevation[rightIndex]) + " = " + (trappedWater + rightWall - elevation[rightIndex]));
 		    trappedWater += rightWall - elevation[rightIndex];
 		} else {
 		    rightWall = elevation[rightIndex];
