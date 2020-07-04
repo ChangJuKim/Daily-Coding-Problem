@@ -20,10 +20,37 @@ Thoughts:
           repeating anyways. Both problems will condense to the original if they're
 	  properly implemented
   2. Idea 1: Loop through string and see what it'd be like as the middle of a palindrome.
-     Use the minimum size one.
+     Return the  minimum size palindrome as answer.
      2.a. Costs are expensive though... lemme calculate
           N to go through string
-	  N for each to see what it's like to be in the middle
+	  N for each character to see what it's like to be in the middle
 	  So O(N^2). More specifically it's around N^2 + 2N for actually forming palindrome
 	  That cost will encapsulate determining lexicographically earliest one
-  
+
+
+Some Notes about the problem:
+  1. Given a string and an index determining the middle of the palindrome,
+     It will always be better to make that the middle of an odd palindrome
+     Unless it is part of a double
+         E.g. given "woord" and index 3 ('r'), it's better to make an odd palindrome (dwooroowd
+	 But with index 1 ('o'), since it's a double, it's better to make 'oo' the middle
+
+  2. Determining alphanumerically first palindrome is actually pretty simple
+     Start at both ends, and choose the alphanumerically smaller one as the starting letter
+     E.g. given "azbcxy" with c as middle,
+       1. a > y. Result = "a zbcxy a
+       2. y > z. Result = "ay zbcx ya"
+       3. x > z. Result = "ayx zbc xya"
+       4. c is middle. Result = "ayxzb c bzxya"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Man. Alright my code is trash cause of a bug
+My approach is trashed
+Also this was... how is it a medium problem??
+man
+
+Well we looked it up.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
