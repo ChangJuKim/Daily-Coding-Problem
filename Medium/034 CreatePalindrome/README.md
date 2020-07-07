@@ -45,12 +45,25 @@ Some Notes about the problem:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Man. Alright my code is trash cause of a bug
+Man. Alright my code is useless cause of a bug
 My approach is trashed
 Also this was... how is it a medium problem??
 man
 
-Well we looked it up.
+Well we looked it up. Gotta use dynamic programming to solve it
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Approach 2:
+   1. Create nxn array and leftIndex, rightIndex (lindex/rindex)
+      1.a. ary[x][y] = shortest way to get palindrome of word.substring(x, length-y)
+   2. Start at ary[0][0] = lIndex = rIndex = 0
+      2.a. If letters at indicies are same, 
+         ary[lIndex+1][rIndex+1] = ary[lIndex][rIndex] + 1
+      2.b. Otherwise,
+         ary[lIndex][rIndex+1] = ary[lindex][rindex] + 1 (i think)
+	 Do the same for lIndex
+      ****While updating ary[x][y], if something already exists just take min(current, new)
+   
+   3. Once array is filled, look at ary[last][last]. Go backwards from there and reconstruct
+      3.a. If they branch, somehow determine alphabetically first one

@@ -1,105 +1,174 @@
-public class createPalindrome {
+public class createPalindrome {    
 
-    // insert(word, 1, 'X') = wXord
-    public static String insert(String string, int index, char toBeInserted) {
-	if (index == 0) { return "" + toBeInserted + string; }
-	if (index == string.length()) { return string + toBeInserted; }
-	return string.substring(0, index) + toBeInserted + string.substring(index);
-    }
-
-    // insert(word, 1, 'X') = wXorXd
-    public static String insertBothWays(String word, int index, char toBeInserted) {
-	if (index == 0 || index == word.length()) { return "" + toBeInserted + word + toBeInserted; }
-	// insert right side first
-	String result = word.substring(0, word.length() - index) + toBeInserted + word.substring(word.length() - index);
-	// insert left side
-	result = result.substring(0, index) + toBeInserted + result.substring(index);
-	return result;
-    }
-
-    // Makes a palindrome using ith index as the middle. Makes alphanumerically first one
-    // If i is part of a pair, then uses the middle of pair as middle
-    // E.g. case 1: (abz, 1). Returns azbza.
-    //      case 2: (abbz, 1). Returns azbbza. NOT abzbzba
-    // Will assume word is lower case. Will handle upper case later
-    // Can't handle words with 3+ identical letters in a row
-    public static String makePalindrome(String word, int middle) {
-	// Edge cases
-	if (word.length() <= 1) {
-	    return word;
-	}
-	if (middle < 0 || middle >= word.length()) {
-	    System.out.println("Invalid index. Error.");
-	}
-
-	// result = middle character(s) and builds up from there
-	String result = "" + word.charAt(middle);
-	// if middle is not part of a pair (e.g. 'abc'), middle2 = middle
-	// Otherwise, (e.g. 'abbc') middle2 = middle + 1
-	int middle2 = middle;
-	
-	// See if the middle is part of a pair
-	while (middle > 0 && word.charAt(middle) == word.charAt(middle - 1)) {
-	    result += word.charAt(middle); // 2 characters long
-	    middle -= 1;
-	}
-	while (middle2 < word.length() - 1 && word.charAt(middle2) == word.charAt(middle2 + 1)) {
-	    result += word.charAt(middle2);
-	    middle2 += 1;
-	}
-
-	// append other characters around result
-	int lIndex = 0;
-	int rIndex = word.length() - 1;
-	int resultIndex = 0;
-	//System.out.println("(middle, middle2): (" + middle + ", " + middle2 + ")");
-	while (lIndex < middle || rIndex > middle2) {
-	    //System.out.println("  Result is currently: " + result);
-	    //System.out.println("  (lIndex, rIndex): (" + lIndex + ", " + rIndex + ")");
-	    if (lIndex != middle && rIndex != middle2 && word.charAt(lIndex) == word.charAt(rIndex)) {
-		// Adding same letter (add both indicies)
-		System.out.println("CASE 1");
-		result = insertBothWays(result, resultIndex, word.charAt(lIndex));
-		lIndex += 1;
-		rIndex -= 1;
-	    } else if (lIndex == middle || (rIndex != middle2 && word.charAt(lIndex) > word.charAt(rIndex))) {
-		// Add the right index
-	        System.out.println("CASE 2");
-		result = insertBothWays(result, resultIndex, word.charAt(rIndex));
-		rIndex -= 1;
-	    } else if (rIndex == middle2 || word.charAt(lIndex) < word.charAt(rIndex)) {
-		// Add the left index
-		System.out.println("CASE 3");
-		result = insertBothWays(result, resultIndex, word.charAt(lIndex));
-		lIndex += 1;
+    // Creates 2-D int array
+    // Start of recursive function
+    // Can remove the lines setting default values to word.length+1 since that's n^2 time
+    public static int[][] dpArray(String word) {
+	int[][] ary = new int[word.length()][word.length()];
+	for (int i = 0; i < ary.length; i++) {
+	    for (int j = 0; j < ary[i].length; j++) {
+		ary[i][j] = word.length() + 1; // max value
 	    }
-	    resultIndex += 1;
 	}
-	return result;
+	ary[0][word.length() - 1] = 0;
+	return dpArray(word, ary, 0, word.length() - 1);
     }
 
-    public static String shortestPalindrome(String word) {
-	String shortest = makePalindrome(word, 0);
-	for (int i = 1; i < word.length(); i++) {
-	    String temp = makePalindrome(word, i);
-	    // compare length
-	    if (temp.length() < shortest.length()) {
-		shortest = temp;
-	    } else if (temp.length() == shortest.length()) {
-		System.out.println("Shortest: " + shortest + " - temp: " + temp);
-		// compare alphanumerically
-		if (shortest.compareTo(temp) > 0) {
-		    shortest = temp;
+    // Fills out array
+    public static int[][] dpArray(String word, int[][] ary, int lIndex, int rIndex) {
+	while (lIndex < rIndex) {
+	    // Both letters are the same
+	    if (word.charAt(lIndex) == word.charAt(rIndex)) {
+		ary[lIndex+1][rIndex-1] = Math.min(ary[lIndex][rIndex] + 1, ary[lIndex+1][rIndex-1]);
+		lIndex += 1;
+		rIndex -= 1;
+	    } else {
+		// Both letters are different
+		ary[lIndex+1][rIndex] = Math.min(ary[lIndex][rIndex] + 1, ary[lIndex+1][rIndex]);
+		ary = dpArray(word, ary, lIndex+1, rIndex);
+		ary[lIndex][rIndex-1] = Math.min(ary[lIndex][rIndex] + 1, ary[lIndex][rIndex-1]);
+		ary = dpArray(word, ary, lIndex, rIndex-1);
+		break;
+	    }
+	}
+	return ary;
+    }
+
+    // Looks for the minimums in the middle diagonal, and the one below that
+    // Middle diagonal represents starting at a specific letter
+    // Diagonal below represents starting between two letters
+    public static String findPalindrome(int[][] ary, String word) {
+	// Find minimum in middle
+	int x = 0;
+	int min = word.length() + 1;
+	for (int y = 0; x < ary.length && y < ary[x].length; y++) {
+	    if (ary[x][y] < min) {
+		min = ary[x][y];
+	    }
+	    x += 1;
+	}
+
+	// See if that minimum exists in diagonal below mid
+	x = 1;
+	boolean exists = false;
+	for (int y = 0; x < ary.length && y < ary[x].length; y++) {
+	    if (ary[x][y] <= min) {
+		min = ary[x][y];
+		exists = true;
+	    }
+	    x += 1;
+	}
+
+	// Find best palindrome
+	String bestPalindrome = word + word + word;
+	
+	if (!exists) { x = 0; } // start at middle diagonal
+	else { x = 1; } // start at diagonal below
+	for (int y = 0; x < ary.length && y < ary[x].length; y++) {
+	    if (ary[x][y] == min) {
+		// get shortest/alphanumerically first one
+		bestPalindrome = getFirst(bestPalindrome, recreatePalindrome(ary, word, x, y, exists));
+	    }
+	    x += 1;
+	}
+	return bestPalindrome;
+    }
+    
+
+    // isDouble checks if you're starting with two letters or one
+    public static String recreatePalindrome(int[][] ary, String word, int x, int y, boolean isDouble) {
+	String current = isDouble ? "" : "" + word.charAt(y);
+	while(ary[x][y] != 0) {
+	    if (x-1 >= 0 && y+1 < ary[x].length && ary[x-1][y+1] == ary[x][y]-1) {
+		x -= 1;
+		y += 1;
+		current = "" + word.charAt(y) + current + word.charAt(y);
+	    } else {
+		String temp1 = "";
+		String temp2 = "";
+		if (x-1 >= 0 && ary[x-1][y] == ary[x][y]-1) {
+		    temp1 = recreatePalindrome(ary, word, x-1, y, current, "up");
 		}
+		if (y+1 < ary[x].length && ary[x][y+1] == ary[x][y]-1) {   
+		    temp2 = recreatePalindrome(ary, word, x, y+1, current, "right");
+		}
+		return getFirst(temp1, temp2); // compare with previous result to get answer
 	    }
 	}
-	return shortest;
+	return current;
     }
 
+        // 
+    public static String recreatePalindrome(int[][] ary, String word, int x, int y, String current, String direction) {
+	if (x < 0 || y < 0 || x >= ary.length || y >= ary[x].length) {
+	    return current;
+	}
+	String character = (direction.equals("up") ? "" + word.charAt(x) : "" + word.charAt(y));
+	current = "" + character + current + character;
+	while(ary[x][y] != 0) {
+	    if (x-1 >= 0 && y+1 < ary[x].length && ary[x-1][y+1] == ary[x][y]-1) {
+		x -= 1;
+		y += 1;
+	    } else {
+		String temp1 = "";
+		String temp2 = "";
+		if (x-1 >= 0 && ary[x-1][y] == ary[x][y]-1) {
+		    temp1 = recreatePalindrome(ary, word, x-1, y, current, "up");
+		}
+		if (y+1 < ary[x].length && ary[x][y+1] == ary[x][y]-1) { 
+		    temp2 = recreatePalindrome(ary, word, x, y+1, current, "right");
+		}
+		return getFirst(temp1, temp2); // compare with previous result to get answer
+	    }
+	}
+	return current;
+    }
+
+    // Determines which word is shorter/alphabetically first
+    public static String getFirst(String word1, String word2) {
+	if (word1.equals("")) { return word2; }
+	if (word2.equals("")) { return word1; }
+	if (word1.length() < word2.length()) { return word1; }
+	if (word2.length() < word1.length()) { return word2; }
+	for (int i = 0; i < word1.length(); i++) {
+	    if (word1.charAt(i) < word2.charAt(i)) {
+		return word1;
+	    }
+	    if (word2.charAt(i) < word1.charAt(i)) {
+		return word2;
+	    }
+	}
+	return word1; // They're the same > . >
+    }
+
+
+
+    public static void printArray(int[] ary) {
+	System.out.print("[");
+	for (int i = 0; i < ary.length; i++) {
+	    if (i == ary.length - 1) {
+		System.out.println("" + ary[i] + "]");
+	    } else {
+		System.out.print("" + ary[i] + ", ");
+	    }
+	}
+    }
+
+    public static void printArray(int[][] ary) {
+	System.out.println("[");
+	for (int i = 0; i < ary.length; i++) {
+	    printArray(ary[i]);
+	}
+	System.out.println("]");
+    }
+
+    
     public static void main(String[] args) {
-	String word = "gaoogle";
+	String word = "baadb";
 	System.out.println("word: " + word);
-	System.out.println("Shortest palinrome: " + shortestPalindrome(word));
-	
+	int[][] ary = dpArray(word);
+	printArray(ary);
+	//System.out.println(ary[3][3]);
+	System.out.println(findPalindrome(ary, word));
     }
 }
