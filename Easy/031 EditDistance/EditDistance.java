@@ -12,7 +12,7 @@ public class EditDistance {
 	// ary[0][0] compares empty strings
 	int[][] ary = new int[word1.length()][word2.length()];
 
-	// Edit distance of string and empty string is length of string
+	// Edit distance of (string, "") is length of string
 	for (int index1 = 0; index1 < word1.length(); index1++) {
 	    ary[index1][0] = index1;
 	}
@@ -25,8 +25,8 @@ public class EditDistance {
 	// Fills in rest of array
 	for (int index1 = 1; index1 < word1.length(); index1++) {
 	    for (int index2 = 1; index2 < word2.length(); index2++) {
-		int smallestDistance = Math.min(Math.min(ary[index1-1][index2], // insert
-							 ary[index1][index2-1]), // delete
+		int smallestDistance = Math.min(Math.min(ary[index1-1][index2], // delete
+							 ary[index1][index2-1]), // insert
 						ary[index1-1][index2-1]); // replace
 		if (word1.charAt(index1) == word2.charAt(index2)) {
 		    ary[index1][index2] = smallestDistance;
