@@ -23,4 +23,12 @@ public class PrintArray {
 	}
     }
 
+    public static void printArray(int[][] ary) {
+	System.out.println("[");
+	for (int i = 0; i < ary.length; i++) {
+	    printArray(ary[i]);
+	}
+	System.out.println("]");
+    }
+
 }
