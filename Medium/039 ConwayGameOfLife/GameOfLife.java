@@ -57,6 +57,7 @@ public class GameOfLife {
 		Coordinate point = hashed.get(hashIndex).get(index);
 		// Find neighbors
 		ArrayList<Coordinate> neighbors = getNeighbors(point, hashed);
+		
 	    }
 	}
     }
