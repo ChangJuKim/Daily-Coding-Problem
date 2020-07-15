@@ -41,3 +41,17 @@ Thoguhts/Ideas/Whatever this section is called now
       Basically take an array and inversion
       And made them return an array and inversion
       It's kinda messy but works
+
+
+Ending thoughts:
+  I suppose you don't need to create new arrays. I did to make my life easier but
+  that can be optimized
+  I'm also not sure that cloning an array is constant time > . >
+
+
+[1, 10, 100, 1000, 20, 120]
+Merge(Merge(A, B) (C, D))
+[1, 10, 100, 1000] [20, 120]
+[1, 10, 20, 100, 120, 1000]
+
+inversions = 3
