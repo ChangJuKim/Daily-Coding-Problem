@@ -5,22 +5,24 @@ public class PrintArray {
 	System.out.print("[");
 	for (int i = 0; i < ary.length; i++) {
 	    if (i == ary.length - 1) {
-		System.out.println("" + ary[i] + "]");
+		System.out.println(ary[i]);
 	    } else {
 		System.out.print("" + ary[i] + ", ");
 	    }
 	}
+	System.out.println("]");
     }
 
     public static void printArray(String[] ary) {
 	System.out.print("[");
 	for (int i = 0; i < ary.length; i++) {
 	    if (i == ary.length - 1) {
-		System.out.println(ary[i] + "]");
+		System.out.println(ary[i]);
 	    } else {
 		System.out.print(ary[i] + ", ");
 	    }
 	}
+	System.out.println("]");
     }
 
     public static void printArray(int[][] ary) {
