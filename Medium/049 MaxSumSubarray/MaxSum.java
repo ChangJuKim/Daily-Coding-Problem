@@ -1,13 +1,10 @@
 public class MaxSum {
-
-
-    
     public static int maxSum(int[] array) {
 	int max = 0;
 	int currentSum = 0;
 	for (int i = 0; i < array.length; i++) {
 	    if (currentSum < 0) {
-		// It's better to restart at this index, than to start with a negative value
+		// It's better to restart at this index than to continue with a negative value
 		currentSum = 0;
 	    }
 	    currentSum += array[i];
@@ -48,5 +45,7 @@ public class MaxSum {
 	test(test3); // should be 0
 	test(new int[] {0, 1, 0, 0, 0, 0, 2}); // should be 3
 	test(new int[] {0, 1, -1, 0, 1, -1, 1, -1}); // should be 1
+	test(new int[] {34, -50, 42, 14, -5});
+	test(new int[] {100, -101, 10, 20, -1, 5});
     }
 }
