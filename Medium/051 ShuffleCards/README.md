@@ -63,3 +63,24 @@ For index i, we know 0...i is randomly selected.
 Thus for index i+1, we can shrink the array to i+1, ... ,n.
 
 Uh... That's not a solid proof but that's on the right track
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OKAY
+So I wrote brandon's code out
+Like, I literally went through all the outcomes and put that into an array
+And I have a bug
+But this is exciting
+Because my bug makes it so that all the results are how you want it, so that
+you get a good shuffling
+Basically my bug converted brandon's code to good code!!!!!
+
+So I'm ignoring some cases, and if Brandon does the same then he will have good
+code!!!
+
+So if we want to find why brandon's code doesn't work, we can see what my bug is!!
+Alright code is in a new file: Shuffle_Brandon_Bugged
+And correct version is in Shuffle_Brandon
+Didn't actually fix bug yet -- I'll stop for tonight
