@@ -61,3 +61,13 @@ Final thoughts:
    So you get binary of exp
    And if exp == 1, multiply total by x
    x = x^2, exp = exp / 2
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+5^9
+Divide 9 => 2^0 + 2^3 => 1001
+5, 25, 625, 625^2, 625^4
+
+5^8 * 5^1
