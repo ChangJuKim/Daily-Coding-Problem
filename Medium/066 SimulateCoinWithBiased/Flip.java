@@ -14,11 +14,15 @@ public class Flip {
 	if (first + second != 1) {
 	    return flip();
 	}
+	return first; // Either returns 1 or 0
+
+	/*
 	// HT result
 	if (first == 1) {
 	    return 1;
 	}
 	// TH result
 	return 0;
+	*/
     }
 }

@@ -44,7 +44,7 @@ Solution explained:
   If flipping twice is a square, then it's something like this
 
        H        T
-    _________________
+   _________________
    |	      |    |
    |          |    |
  H |	HH    | HT |
@@ -57,6 +57,8 @@ Solution explained:
    So you can never do anything with a HH, TT result because you don't know
    how large or small their area is. You do know however that no matter how
    biased, TH and HT have equal probability of occuring
+
+
 
 
 
