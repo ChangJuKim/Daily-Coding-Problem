@@ -45,7 +45,7 @@ public class RandomInt {
     public static Integer repicking(int n, HashSet<Integer> l) {
 	Random rand = new Random();
 	int current = rand.nextInt(n);
-	int x = n * n;   // Stopping value
+	int x = (n <= 10) ? 100 : n^2; // Stopping value for x 
 	while(x != 0 && l.contains(current)) {
 	    current = rand.nextInt(n);
 	    x -= 1;
