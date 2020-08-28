@@ -42,4 +42,4 @@ Storage: O(1).
 
 
 Also I didn't code it cause today we're just talking about it
-Well I had extra time so I coded it
+Well I had extra time so I coded it lol
