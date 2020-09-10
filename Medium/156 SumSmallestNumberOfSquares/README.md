@@ -61,3 +61,5 @@ So since each recursion is at most sqrt(n) long, that's sqrt(n)^4 = n^2
 
 Anyways using 4-square theorem will make it a lot faster
 And yes, picking the largest isn't the best solution.
+
+*Fastest solution = O(k+n) or something. Dynamic = O(n^(3/2))
