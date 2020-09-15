@@ -44,9 +44,8 @@ I will assume that
   1. Game ends when you run out of cards (52). If a game cannot be concluded (e.g. dealer
   or player wants to hit but can't) then there is no win or loss for that round.
   2. Deck is not shuffled.
-  3. Cards are dealt: Player, Dealer, Player, Dealer.
-  4. Dealer will not hit if he has a greater total than the Player
-  5. A draw will result in 0 points. Wins = +1, loss = -1
+  3. Starting hands are dealt: Player, Dealer, Player, Dealer.
+  4. A draw will result in 0 points. Wins = +1, loss = -1
 
 -------------------
 
@@ -84,4 +83,15 @@ Storage: O(n)
 Also I fixed compilation errors but I don't know if it actually works
 Someone tell me if it does? :D
 
-Or maybe I'll run this someone when I have more free
+Or maybe I'll run this sometime when I have more free time
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+9/14
+I added the deck stuff and the testing functions
+And f'd up a lot of things related to testing
+Stopping cause my head hurts.
+Might need to create *another* global array
+
+Regardless, my testing functions don't really work
+And I'm starting to think I coded my algorithm wrong
