@@ -5,7 +5,7 @@ public class PrintArray {
 	System.out.print("[");
 	for (int i = 0; i < ary.length; i++) {
 	    if (i == ary.length - 1) {
-		System.out.println(ary[i]);
+		System.out.print(ary[i]);
 	    } else {
 		System.out.print("" + ary[i] + ", ");
 	    }
@@ -17,7 +17,7 @@ public class PrintArray {
 	System.out.print("[");
 	for (int i = 0; i < ary.length; i++) {
 	    if (i == ary.length - 1) {
-		System.out.println(ary[i]);
+		System.out.print(ary[i]);
 	    } else {
 		System.out.print(ary[i] + ", ");
 	    }
