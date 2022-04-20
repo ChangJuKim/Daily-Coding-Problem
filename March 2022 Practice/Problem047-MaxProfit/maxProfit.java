@@ -59,7 +59,7 @@ public class maxProfit {
         int[] test1 = new int[] {9, 11, 8, 5, 7, 10};
         System.out.println(getProfit(test1)); // returns 5
         
-        int[] test2 = new int[] {0, 0, 0};
+        int[] test2 = new int[] {-1, -1, -1};
         System.out.println(getProfit(test2)); // returns 0
 
         int[] test3 = new int[] {};
