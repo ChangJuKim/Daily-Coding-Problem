@@ -54,7 +54,7 @@ number in the array.
     262
     271
     280
-    371
+    307
     ...
     901
     910
@@ -87,6 +87,10 @@ number in the array.
     This took me about... an hour 20 minutes to code and test. But I'm glad I got it to work.
     Seems like between 10000 and 50000, my code does much better than the simple one for testing.
     And of course, since it saves in an array it does better on repeated calls.
+
+    My runtime is O(n) and my space complexity is O(n).
+    I just realized there's a O(1) time and space algorithm. Turns out there is a mathematical way of getting it.
+    And here I was feeling so proud of myself hahah.
  */
 
 import java.util.ArrayList;
@@ -130,7 +134,7 @@ public class NthPerfectNumber {
         return validDigit;
     }
 
-    // Adds 1 to the validDigit's spot, and makes everything to the right 0. Fills 1 to make sure it still sums to 10.
+    // Adds 1 to the validDigit's spot, and makes everything to the right 0. Fills ones digit to make sure it still sums to 10.
     private static int getNextNum(int num, int validDigit) {
         int powerTen = (int)Math.pow(10, validDigit);
         num = num + powerTen; // Add 1 to digit
